@@ -1,12 +1,8 @@
 # Kernel
-arm_64bit=1
 kernel=Image
 
 # Ramdisk
 initramfs ramdisk.img followkernel
-
-# Audio
-dtparam=audio=on
 
 # Camera
 camera_auto_detect=1
@@ -21,7 +17,6 @@ disable_overscan=1
 
 # Graphics acceleration
 dtoverlay=vc4-kms-v3d
-dtoverlay=cma,cma-512
 
 # I2C
 #dtparam=i2c_arm=on
@@ -29,14 +24,8 @@ dtoverlay=cma,cma-512
 # I2S
 #dtparam=i2s=on
 
-# Serial console
-enable_uart=1
-
 # SPI
 #dtparam=spi=on
 
 # USB
 dtoverlay=dwc2,dr_mode=peripheral
-[cm4]
-dtoverlay=dwc2,dr_mode=otg
-[all]

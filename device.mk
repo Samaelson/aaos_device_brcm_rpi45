@@ -8,13 +8,8 @@ DEVICE_PATH := device/brcm/rpi5
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 $(call inherit-product, frameworks/native/build/tablet-7in-xhdpi-2048-dalvik-heap.mk)
 $(call inherit-product, vendor/brcm/rpi5/rpi5-vendor.mk)
-
-PRODUCT_AAPT_CONFIG := normal mdpi hdpi
-PRODUCT_AAPT_PREF_CONFIG := hdpi
-PRODUCT_CHARACTERISTICS := automotive,nosdcard
 
 # APEX
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
@@ -79,9 +74,7 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-    android.hardware.bluetooth@1.0-impl \
-    android.hardware.bluetooth@1.0-service \
-    libbt-vendor
+    android.hardware.bluetooth@1.1-service.btlinux
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.bluetooth.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth.xml \
@@ -97,7 +90,7 @@ PRODUCT_COPY_FILES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    android.hardware.camera.provider@2.5-external-service
+    android.hardware.camera.provider-V1-external-service
 
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/camera/external_camera_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/external_camera_config.xml
@@ -108,21 +101,26 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.5-service_64 \
     camera.libcamera \
-    ipa_rpi_vc4
+    ipa_rpi_pisp
+
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/camera/android.hardware.camera.provider@2.5-service_64.rpi.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/android.hardware.camera.provider@2.5-service_64.rpi.rc
 
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/camera/camera_hal.yaml:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/camera_hal.yaml \
-    external/libcamera/src/ipa/rpi/vc4/data/imx219.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/vc4/imx219.json \
-    external/libcamera/src/ipa/rpi/vc4/data/imx219_noir.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/vc4/imx219_noir.json \
-    external/libcamera/src/ipa/rpi/vc4/data/imx477.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/vc4/imx477.json \
-    external/libcamera/src/ipa/rpi/vc4/data/imx477_noir.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/vc4/imx477_noir.json \
-    external/libcamera/src/ipa/rpi/vc4/data/imx477_scientific.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/vc4/imx477_scientific.json \
-    external/libcamera/src/ipa/rpi/vc4/data/imx708.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/vc4/imx708.json \
-    external/libcamera/src/ipa/rpi/vc4/data/imx708_noir.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/vc4/imx708_noir.json \
-    external/libcamera/src/ipa/rpi/vc4/data/imx708_wide.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/vc4/imx708_wide.json \
-    external/libcamera/src/ipa/rpi/vc4/data/imx708_wide_noir.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/vc4/imx708_wide_noir.json \
-    external/libcamera/src/ipa/rpi/vc4/data/ov5647.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/vc4/ov5647.json \
-    external/libcamera/src/ipa/rpi/vc4/data/ov5647_noir.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/vc4/ov5647_noir.json
+    external/libcamera/src/ipa/rpi/pisp/data/imx219.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx219.json \
+    external/libcamera/src/ipa/rpi/pisp/data/imx219_noir.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx219_noir.json \
+    external/libcamera/src/ipa/rpi/pisp/data/imx296.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx296.json \
+    external/libcamera/src/ipa/rpi/pisp/data/imx296_mono.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx296_mono.json \
+    external/libcamera/src/ipa/rpi/pisp/data/imx477.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx477.json \
+    external/libcamera/src/ipa/rpi/pisp/data/imx477_noir.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx477_noir.json \
+    external/libcamera/src/ipa/rpi/pisp/data/imx477_scientific.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx477_scientific.json \
+    external/libcamera/src/ipa/rpi/pisp/data/imx708.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx708.json \
+    external/libcamera/src/ipa/rpi/pisp/data/imx708_noir.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx708_noir.json \
+    external/libcamera/src/ipa/rpi/pisp/data/imx708_wide.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx708_wide.json \
+    external/libcamera/src/ipa/rpi/pisp/data/imx708_wide_noir.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx708_wide_noir.json \
+    external/libcamera/src/ipa/rpi/pisp/data/ov5647.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/ov5647.json \
+    external/libcamera/src/ipa/rpi/pisp/data/ov5647_noir.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/ov5647_noir.json
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.xml \
@@ -134,6 +132,15 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/camera/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
+
+# CEC
+PRODUCT_PACKAGES += \
+    android.hardware.tv.cec@1.0-impl \
+    android.hardware.tv.cec@1.0-service \
+    hdmi_cec.rpi
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.hdmi.cec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.hdmi.cec.xml
 
 # Debugfs
 PRODUCT_SET_DEBUGFS_RESTRICTIONS := false
@@ -184,11 +191,15 @@ PRODUCT_COPY_FILES += \
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.0-service.rpi
+    android.hardware.health-service.rpi
 
 # Kernel
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)-kernel/Image:$(PRODUCT_OUT)/kernel
+
+# Keylayout
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/keylayout/Generic.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Generic.kl
 
 # Keymaster
 PRODUCT_PACKAGES += \
@@ -196,7 +207,7 @@ PRODUCT_PACKAGES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.rpi
+    android.hardware.light-service.rpi
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -204,10 +215,6 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_c2_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_c2_tv.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_tv.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_c2_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_c2_video.xml
-
-# Permissions
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/tablet_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/tablet_core_hardware.xml
 
 # Power
 PRODUCT_PACKAGES += \
@@ -227,16 +234,16 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/seccomp_policy/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
     $(DEVICE_PATH)/seccomp_policy/mediaswcodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaswcodec.policy
 
-# Settings
-PRODUCT_PACKAGES += \
-    androidx.window.extensions
-
 # Storage
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
 # Suspend
 PRODUCT_PACKAGES += \
     suspend_blocker_rpi
+
+# Thermal
+PRODUCT_PACKAGES += \
+    android.hardware.thermal-service.example
 
 # USB
 PRODUCT_PACKAGES += \
@@ -247,16 +254,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml
-
-# V4L2
-PRODUCT_SOONG_NAMESPACES += external/v4l2_codec2
-
-PRODUCT_PACKAGES += \
-    android.hardware.media.c2@1.0-service-v4l2 \
-    libc2plugin_store
-
-PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/media/media_codecs_v4l2_c2_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_v4l2_c2_video.xml
 
 # Virtualization
 $(call inherit-product, packages/modules/Virtualization/apex/product_packages.mk)
@@ -277,3 +274,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml
+
+# Window extensions
+$(call inherit-product, $(SRC_TARGET_DIR)/product/window_extensions.mk)
