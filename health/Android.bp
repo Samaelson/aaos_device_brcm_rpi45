@@ -1,32 +1,33 @@
-// Copyright (C) 2018 The Android Open Source Project
-// Copyright (C) 2023 KonstaKANG
+// Copyright (C) 2021-2022 KonstaKANG
 //
 // SPDX-License-Identifier: Apache-2.0
 
 cc_binary {
-    name: "android.hardware.health-service.rpi",
+    name: "android.hardware.health@2.0-service.rpi",
     relative_install_path: "hw",
-    vendor: true,
-    init_rc: ["android.hardware.health-service.rpi.rc"],
-    vintf_fragments: ["android.hardware.health-service.rpi.xml"],
+    init_rc: ["android.hardware.health@2.0-service.rpi.rc"],
+    vintf_fragments: ["android.hardware.health@2.0-service.rpi.xml"],
+    proprietary: true,
     srcs: [
-        "HealthImpl.cpp",
-        "main.cpp",
+        "HealthService.cpp",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
     ],
     static_libs: [
-        "android.hardware.health-translate-ndk",
+        "android.hardware.health@2.0-impl",
+        "android.hardware.health@1.0-convert",
+        "libhealthservice",
         "libbatterymonitor",
-        "libhealthloop",
-        "libhealth_aidl_impl",
+        "libhealthstoragedefault",
     ],
     shared_libs: [
         "libbase",
-        "libbinder_ndk",
         "libcutils",
         "libhidlbase",
-        "liblog",
         "libutils",
-        "android.hardware.health-V2-ndk",
+        "android.hardware.health@2.0",
     ],
-    overrides: ["charger"],
+    header_libs: ["libhealthd_headers"],
 }

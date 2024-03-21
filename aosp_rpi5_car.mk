@@ -11,7 +11,8 @@ PRODUCT_AAPT_CONFIG := normal mdpi hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 PRODUCT_CHARACTERISTICS := automotive,nosdcard
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
-$(call inherit-product, packages/services/Car/car_product/build/car.mk)
+#$(call inherit-product, packages/services/Car/car_product/build/car.mk)
+$(call inherit-product, device/brcm/rpi-car/rpi_car.mk)
 
 # Bluetooth
 PRODUCT_VENDOR_PROPERTIES += \
@@ -55,16 +56,24 @@ PRODUCT_COPY_FILES += \
     device/brcm/rpi5/camera/evs_config_override.json:${TARGET_COPY_OUT_VENDOR}/etc/automotive/evs/config_override.json
 
 # Overlays
+#PRODUCT_PACKAGES += \
+#    AndroidRpiOverlay \
+#    CarServiceRpiOverlay \
+#    SettingsProviderRpiOverlay \
+#    WifiRpiOverlay
+
+# Overlays
 PRODUCT_PACKAGES += \
     AndroidRpiOverlay \
-    CarServiceRpiOverlay \
+    SettingsRpiOverlay \
     SettingsProviderRpiOverlay \
+    SystemUIRpiOverlay \
     WifiRpiOverlay
 
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.activities_on_secondary_displays.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.activities_on_secondary_displays.xml \
-    frameworks/native/data/etc/car_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/car_core_hardware.xml
+    frameworks/native/data/etc/tablet_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/tablet_core_hardware.xml
 
 # Vehicle
 PRODUCT_PACKAGES += \
@@ -74,8 +83,6 @@ PRODUCT_PACKAGES += \
 # PRODUCT_LOCALES := de_DE
 # PRODUCT_PROPERTY_OVERRIDES += persist.sys.timezone=Europe/Berlin
 
-$(call inherit-product, device/brcm/rpi-car/rpi_car.mk)
-
 # Device identifier. This must come after all inclusions.
 PRODUCT_DEVICE := rpi5
 PRODUCT_NAME := aosp_rpi5_car
@@ -83,3 +90,6 @@ PRODUCT_BRAND := Raspberry
 PRODUCT_MODEL := Raspberry Pi 5
 PRODUCT_MANUFACTURER := Raspberry
 PRODUCT_RELEASE_NAME := Raspberry Pi 5
+
+
+PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true

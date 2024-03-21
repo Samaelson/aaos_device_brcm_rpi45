@@ -7,11 +7,12 @@
 DEVICE_PATH := device/brcm/rpi5
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
 
-ifeq ($(TARGET_ARCH),arm64)
+#ifeq ($(TARGET_ARCH),arm64)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-endif
+#endif
 $(call inherit-product, frameworks/native/build/tablet-7in-xhdpi-2048-dalvik-heap.mk)
 $(call inherit-product, vendor/brcm/rpi5/rpi5-vendor.mk)
+
 
 # APEX
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
@@ -76,7 +77,9 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-    android.hardware.bluetooth@1.1-service.btlinux
+    android.hardware.bluetooth@1.0-impl \
+    android.hardware.bluetooth@1.0-service \
+    libbt-vendor
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.bluetooth.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth.xml \
@@ -113,8 +116,6 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/camera/camera_hal.yaml:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/camera_hal.yaml \
     external/libcamera/src/ipa/rpi/pisp/data/imx219.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx219.json \
     external/libcamera/src/ipa/rpi/pisp/data/imx219_noir.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx219_noir.json \
-    external/libcamera/src/ipa/rpi/pisp/data/imx296.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx296.json \
-    external/libcamera/src/ipa/rpi/pisp/data/imx296_mono.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx296_mono.json \
     external/libcamera/src/ipa/rpi/pisp/data/imx477.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx477.json \
     external/libcamera/src/ipa/rpi/pisp/data/imx477_noir.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx477_noir.json \
     external/libcamera/src/ipa/rpi/pisp/data/imx477_scientific.json:$(TARGET_COPY_OUT_VENDOR)/etc/libcamera/ipa/rpi/pisp/imx477_scientific.json \
@@ -135,15 +136,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/camera/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
-
-# CEC
-PRODUCT_PACKAGES += \
-    android.hardware.tv.cec@1.0-impl \
-    android.hardware.tv.cec@1.0-service \
-    hdmi_cec.rpi
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.hdmi.cec.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.hdmi.cec.xml
 
 # Debugfs
 PRODUCT_SET_DEBUGFS_RESTRICTIONS := false
@@ -194,15 +186,11 @@ PRODUCT_COPY_FILES += \
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health-service.rpi
+    android.hardware.health@2.0-service.rpi
 
 # Kernel
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)-kernel/Image:$(PRODUCT_OUT)/kernel
-
-# Keylayout
-PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/keylayout/Generic.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Generic.kl
 
 # Keymaster
 PRODUCT_PACKAGES += \
@@ -210,7 +198,7 @@ PRODUCT_PACKAGES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light-service.rpi
+    android.hardware.light@2.0-service.rpi
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -237,16 +225,16 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/seccomp_policy/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
     $(DEVICE_PATH)/seccomp_policy/mediaswcodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaswcodec.policy
 
+# Settings
+PRODUCT_PACKAGES += \
+    androidx.window.extensions
+
 # Storage
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
 # Suspend
 PRODUCT_PACKAGES += \
     suspend_blocker_rpi
-
-# Thermal
-PRODUCT_PACKAGES += \
-    android.hardware.thermal-service.example
 
 # USB
 PRODUCT_PACKAGES += \
@@ -280,5 +268,3 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.supports_background_blur=1
 
-# Window extensions
-$(call inherit-product, $(SRC_TARGET_DIR)/product/window_extensions.mk)

@@ -26,7 +26,9 @@ TARGET_2ND_CPU_VARIANT := generic
 
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
+BOARD_CUSTOM_BT_CONFIG := $(DEVICE_PATH)/bluetooth/vnd_rpi5.txt
 BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_BCM := true
 
 # Camera
 BOARD_LIBCAMERA_IPAS := rpi/pisp
@@ -49,9 +51,12 @@ BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_PATH)/mkbootimg.mk
 BOARD_KERNEL_CMDLINE := console=ttyAMA10,115200 no_console_suspend root=/dev/ram0 rootwait androidboot.hardware=rpi5
 
 # Manifest
-DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(DEVICE_PATH)/framework_compatibility_matrix.xml
+#DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(DEVICE_PATH)/framework_compatibility_matrix.xml
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
+
+# Media
+TARGET_ENABLE_MEDIADRM_64 := true
 
 # Partition sizes
 BOARD_FLASH_BLOCK_SIZE := 4096
@@ -88,3 +93,4 @@ WPA_SUPPLICANT_VERSION := VER_0_8_X
 # General
 #BUILD_BROKEN_GENRULE_SANDBOXING := false
 #BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
+TARGET_SUPPORTS_64_BIT_APPS := true
