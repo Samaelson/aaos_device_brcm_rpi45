@@ -10,7 +10,7 @@ cc_binary {
     vintf_fragments: ["android.hardware.light@2.0-service.rpi.xml"],
     proprietary: true,
     srcs: [
-        "Lights.cpp",
+        "Light.cpp",
         "service.cpp",
     ],
     shared_libs: [
