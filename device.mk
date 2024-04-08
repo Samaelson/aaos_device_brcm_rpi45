@@ -7,9 +7,7 @@
 DEVICE_PATH := device/brcm/rpi5
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
 
-ifeq ($(TARGET_ARCH),arm64)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-endif
 $(call inherit-product, frameworks/native/build/tablet-7in-xhdpi-2048-dalvik-heap.mk)
 $(call inherit-product, vendor/brcm/rpi5/rpi5-vendor.mk)
 
@@ -92,8 +90,7 @@ PRODUCT_COPY_FILES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    android.hardware.camera.provider-V1-external-service \
-	android.hardware.automotive.evs@1.1
+    android.hardware.camera.provider-V1-external-service
 
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/camera/external_camera_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/external_camera_config.xml
@@ -151,6 +148,10 @@ PRODUCT_SET_DEBUGFS_RESTRICTIONS := false
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey
+
+# Emergency info
+PRODUCT_PACKAGES += \
+    EmergencyInfo
 
 # Ethernet
 PRODUCT_COPY_FILES += \
@@ -233,7 +234,6 @@ PRODUCT_COPY_FILES += \
 
 # Seccomp
 PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/seccomp_policy/codec2.vendor.ext.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/codec2.vendor.ext.policy \
     $(DEVICE_PATH)/seccomp_policy/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
     $(DEVICE_PATH)/seccomp_policy/mediaswcodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaswcodec.policy
 
@@ -277,8 +277,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml
-
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.supports_background_blur=1
 
 # Window extensions
 $(call inherit-product, $(SRC_TARGET_DIR)/product/window_extensions.mk)
