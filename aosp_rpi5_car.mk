@@ -11,8 +11,6 @@ PRODUCT_AAPT_CONFIG := normal mdpi hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 PRODUCT_CHARACTERISTICS := automotive,nosdcard
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
-# $(call inherit-product, packages/services/Car/car_product/build/car.mk)
-
 $(call inherit-product, device/brcm/rpi-car/rpi_car.mk)
 
 # Bluetooth
