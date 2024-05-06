@@ -248,10 +248,8 @@ static void hdmicec_get_port_info(const struct hdmi_cec_device *dev,
             ctx->port_info.arc_supported,
             ctx->port_info.physical_address);
 
-    if (ctx->port_info.physical_address != CEC_PHYS_ADDR_INVALID) {
-        *list = &ctx->port_info;
-        *total = 1;
-    }
+    *list = &ctx->port_info;
+    *total = 1;
 }
 
 static void hdmicec_set_option(const struct hdmi_cec_device *dev, int flag, int value)

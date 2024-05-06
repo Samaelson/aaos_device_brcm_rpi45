@@ -7,7 +7,7 @@
 
 # DRM
 /vendor/bin/hw/android\.hardware\.drm-service\.clearkey                      u:object_r:hal_drm_clearkey_exec:s0
-/vendor/bin/hw/android\.hardware\.drm-service\.widevine(.*)?                 u:object_r:hal_drm_widevine_exec:s0
+/vendor/bin/hw/android\.hardware\.drm-service\.widevine                      u:object_r:hal_drm_widevine_exec:s0
 
 # FFmpeg
 /vendor/bin/hw/android\.hardware\.media\.c2@1\.2-service-ffmpeg              u:object_r:mediacodec_exec:s0
@@ -47,5 +47,5 @@
 # Suspend
 /vendor/bin/suspend_blocker_rpi                                              u:object_r:suspend_blocker_exec:s0
 
-# USB
-/vendor/bin/hw/android\.hardware\.usb\.gadget@1\.2-service\.rpi              u:object_r:hal_usb_gadget_default_exec:s0
+# Thermal
+/vendor/bin/hw/android\.hardware\.thermal@2\.0-service\.mock                 u:object_r:hal_thermal_default_exec:s0

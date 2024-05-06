@@ -11,7 +11,7 @@ PRODUCT_AAPT_CONFIG := normal mdpi hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 PRODUCT_CHARACTERISTICS := automotive,nosdcard
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
-$(call inherit-product, device/brcm/rpi-car/rpi_car.mk)
+$(call inherit-product, packages/services/Car/car_product/build/car.mk)
 
 # Bluetooth
 PRODUCT_VENDOR_PROPERTIES += \
@@ -37,7 +37,7 @@ PRODUCT_VENDOR_PROPERTIES += \
 
 # Broadcast radio
 PRODUCT_PACKAGES += \
-    android.hardware.broadcastradio-service.default
+    android.hardware.broadcastradio@2.0-service
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.broadcastradio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.broadcastradio.xml
@@ -52,7 +52,7 @@ ENABLE_EVS_SERVICE := true
 ENABLE_REAR_VIEW_CAMERA_SAMPLE := true
 
 PRODUCT_COPY_FILES += \
-    device/brcm/rpi5/camera/evs_config_override.json:${TARGET_COPY_OUT_VENDOR}/etc/automotive/evs/config_override.json
+    device/brcm/rpi5/camera/evs_config_override.json:${TARGET_COPY_OUT_SYSTEM}/etc/automotive/evs/config_override.json
 
 # Overlays
 PRODUCT_PACKAGES += \
@@ -69,10 +69,6 @@ PRODUCT_COPY_FILES += \
 # Vehicle
 PRODUCT_PACKAGES += \
     android.hardware.automotive.vehicle@2.0-default-service
-
-# Localization
-# PRODUCT_LOCALES := de_DE
-# PRODUCT_PROPERTY_OVERRIDES += persist.sys.timezone=Europe/Amsterdam
 
 # Device identifier. This must come after all inclusions.
 PRODUCT_DEVICE := rpi5

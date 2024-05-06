@@ -19,6 +19,3 @@
 
 # ION
 /dev/ion                                                                     0664   system     system
-
-# USB
-/sys/class/udc/1000480000.usb  current_speed                                 0664   system     system
