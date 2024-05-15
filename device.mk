@@ -246,7 +246,7 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_PACKAGES += \
-    com.android.hardware.thermal
+    android.hardware.thermal-service.example
 
 # USB
 PRODUCT_PACKAGES += \
