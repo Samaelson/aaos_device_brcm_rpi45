@@ -7,16 +7,24 @@
 # Inherit device configuration
 $(call inherit-product, device/brcm/rpi5/device.mk)
 
+DEVICE_CAR_PATH := device/brcm/rpi5/car
+
 PRODUCT_AAPT_CONFIG := normal mdpi hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 PRODUCT_CHARACTERISTICS := automotive,nosdcard
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
-$(call inherit-product, device/brcm/rpi-car/rpi_car.mk)
+$(call inherit-product, packages/services/Car/car_product/build/car.mk)
+
+# Audio
+PRODUCT_PACKAGES += \
+    android.hardware.automotive.audiocontrol-service.example
+
+PRODUCT_COPY_FILES += \
+    $(DEVICE_CAR_PATH)/car_audio_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/car_audio_configuration.xml
 
 # Bluetooth
 PRODUCT_VENDOR_PROPERTIES += \
     bluetooth.device.class_of_device=38,4,8 \
-    bluetooth.profile.a2dp.source.enabled=false \
     bluetooth.profile.asha.central.enabled=false \
     bluetooth.profile.bap.broadcast.assist.enabled=false \
     bluetooth.profile.bap.unicast.client.enabled=false \
@@ -45,6 +53,19 @@ PRODUCT_COPY_FILES += \
 # Camera
 ENABLE_CAMERA_SERVICE := true
 
+# CAN
+PRODUCT_PACKAGES += \
+    android.hardware.automotive.can-service
+
+PRODUCT_PACKAGES += \
+    canhalctrl \
+    canhaldump \
+    canhalsend
+
+# Display
+PRODUCT_COPY_FILES += \
+    $(DEVICE_CAR_PATH)/display_settings.xml:$(TARGET_COPY_OUT_VENDOR)/etc/display_settings.xml
+
 # EVS
 ENABLE_CAREVSSERVICE_SAMPLE := true
 ENABLE_EVS_SAMPLE := true
@@ -52,7 +73,13 @@ ENABLE_EVS_SERVICE := true
 ENABLE_REAR_VIEW_CAMERA_SAMPLE := true
 
 PRODUCT_COPY_FILES += \
-    device/brcm/rpi5/camera/evs_config_override.json:${TARGET_COPY_OUT_VENDOR}/etc/automotive/evs/config_override.json
+    $(DEVICE_CAR_PATH)/evs_config_override.json:${TARGET_COPY_OUT_VENDOR}/etc/automotive/evs/config_override.json
+
+# Occupant awareness
+PRODUCT_PACKAGES += \
+    android.hardware.automotive.occupant_awareness@1.0-service
+
+include packages/services/Car/car_product/occupant_awareness/OccupantAwareness.mk
 
 # Overlays
 PRODUCT_PACKAGES += \
@@ -68,11 +95,7 @@ PRODUCT_COPY_FILES += \
 
 # Vehicle
 PRODUCT_PACKAGES += \
-    android.hardware.automotive.vehicle@2.0-default-service
-
-# Localization
-# PRODUCT_LOCALES := de_DE
-# PRODUCT_PROPERTY_OVERRIDES += persist.sys.timezone=Europe/Amsterdam
+    android.hardware.automotive.vehicle@V3-default-service
 
 # Device identifier. This must come after all inclusions.
 PRODUCT_DEVICE := rpi5

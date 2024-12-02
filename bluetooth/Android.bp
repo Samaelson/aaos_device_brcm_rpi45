@@ -1,0 +1,33 @@
+// Copyright (C) 2020 The Android Open Source Project
+// Copyright (C) 2024 KonstaKANG
+//
+// SPDX-License-Identifier: Apache-2.0
+
+cc_binary {
+    name: "android.hardware.bluetooth-service.rpi",
+    relative_install_path: "hw",
+    init_rc: ["bluetooth-service-rpi.rc"],
+    vintf_fragments: ["bluetooth-service-rpi.xml"],
+    vendor: true,
+    cflags: [
+        "-Wall",
+        "-Wextra",
+    ],
+    srcs: [
+        "BluetoothHci.cpp",
+        "net_bluetooth_mgmt.cpp",
+        "service.cpp",
+    ],
+    shared_libs: [
+        "android.hardware.bluetooth-V1-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "libhidlbase",
+        "liblog",
+        "libutils",
+    ],
+    static_libs: [
+        "android.hardware.bluetooth.async",
+        "android.hardware.bluetooth.hci",
+    ],
+}
